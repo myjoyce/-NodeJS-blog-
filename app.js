@@ -6,7 +6,8 @@
  var express = require('express');
  //加载模板
  var swig = require('swig');
- 
+ //加载数据库模块
+ var mongoose = require('mongoose');
  //创建app应用 =>NodeJs Http:createServer();
  var app = express();
 
@@ -34,7 +35,16 @@ app.use('/public',express.static(__dirname + '/public'));
 
 
  //监听HTTP请求
- app.listen(8081);
+ mongoose.connect('mongodb://localhost:27017/blog',function(err){
+     if(err){
+         console.log('数据库连接失败');
+         
+     }else{
+         console.log('数据库连接成功');
+         app.listen(8081);
+     }
+ });
+
 
 
  
