@@ -23,23 +23,17 @@ app.use('/public',express.static(__dirname + '/public'));
  app.set('view engine','html');
  //在开发过程中，需要取消模板缓存
  swig.setDefaults({cache:false});
-/**
- * 首页
- *    req request对象
- *    res response对象
- *    next 函数
- */
- app.get('/',function(req,res,next){
-    //res.send('<h1>欢迎光临我的博客</h1>');
 
-    /**
-     * 读取views目录下的指定文件，解析并返回给客户端
-     * 第一个参数表示模板的文件，相对于views目录  views/index.html
-     * 第二个参数：传递给模板使用的数据
-     */
-    res.render('index');
- })
+ /**
+  * 根据不同的功能划分模块
+  */
+ app.use('/admin',require('./routers/admin'));
+ app.use('/api',require('./routers/api'));
+ app.use('/',require('./routers/main'));
 
 
  //监听HTTP请求
  app.listen(8081);
+
+
+ 
